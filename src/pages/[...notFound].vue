@@ -13,18 +13,19 @@ const typedRef = useTyped([' is not found!'])
 					hover="shadow-md"
 					dark="text-black"
 				>
-					Go Home
+					回首页
 				</button>
 			</RouterLink>
 		</div>
 
-		<img src="/notFound/32.svg" class="cover" alt="page not found" />
+		<img src="/notFound/3.svg" class="cover" alt="page not found" />
 	</div>
 </template>
 
 <style>
 .code {
 	margin-bottom: 20px;
+	transition: all;
 }
 
 .content {

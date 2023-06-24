@@ -1,40 +1,203 @@
 <template>
-	<div>
-		<div class="grid grid-cols-3">
-			<a href="https://github.com/dishait/tov-template" target="_blank">
-				<img src="/logo.png" class="logo" alt="Vite logo" />
-			</a>
-			<a href="https://vitejs.dev" target="_blank">
-				<img src="/vite.svg" class="logo" alt="Vite logo" />
-			</a>
-			<a href="https://vuejs.org/" target="_blank">
-				<img src="/vue.svg" class="logo vue" alt="Vue logo" />
-			</a>
+	<div class="loading">Loading...</div>
+	<div class="template-page">
+		<div class="header">
+			<div class="logo">GSAP</div>
+			<nav>
+				<ul>
+					<li>Home</li>
+					<li>About</li>
+					<li>Contact</li>
+				</ul>
+			</nav>
 		</div>
-		<HelloWorld msg="Tov + Vite + Vue" />
+
+		<div class="content">
+			<div class="left">
+				<h2>Hellow Gsap</h2>
+				<h2>This is a demo for gsap</h2>
+				<h3>Enjoy it Magic Animation feature of gsap</h3>
+			</div>
+			<div class="right">
+				<video
+					class="active"
+					src="/src/assets/spring.mp4"
+					autoplay
+					loop
+					muted
+				></video>
+			</div>
+		</div>
 	</div>
 </template>
 
-<style>
-a {
-	color: rgba(37, 99, 235);
+<script setup lang="ts">
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+onMounted(() => {
+	LoadAnimation()
+})
+
+const LoadAnimation = () => {
+	const tl = gsap.timeline()
+
+	tl.to('.loading', {
+		duration: 0.5,
+		opacity: 0,
+		display: 'none',
+		ease: 'power2',
+	})
+		.from('.header', {
+			duration: 0.5,
+			opacity: 0,
+			y: -100,
+			ease: 'back',
+			stagger: 0.25,
+		})
+		.from('.left h2', {
+			duration: 0.5,
+			opacity: 0,
+			y: 100,
+			ease: 'back',
+			stagger: 0.25,
+		})
+		.from(
+			'.left h3',
+			{
+				duration: 0.5,
+				opacity: 0,
+				y: 100,
+				ease: 'back',
+				stagger: 0.25,
+			},
+			'-=0.5'
+		)
+		.from(
+			'.right video',
+			{
+				duration: 1,
+				opacity: 0,
+				y: 100,
+				ease: 'back',
+				stagger: 0.25,
+			},
+			'-=0.5'
+		)
+
+	gsap.registerPlugin(ScrollTrigger)
+	gsap.to('.right', {
+		scale: 1,
+		x: 0,
+		y: 0,
+		scrollTrigger: {
+			trigger: '.content',
+			start: 'bottom bottom',
+			end: 'bottom top',
+			scrub: true,
+			pin: true,
+			markers: false,
+		},
+	})
+
+	// const dom = document.querySelector('.car-box')
+	// const effect = gsap.to(dom, {
+	// 	duration: 5,
+	// 	x: 100,
+	// 	y: 600,
+	// 	repeat: -1,
+	// 	repeatDelay: 1,
+	// })
+}
+</script>
+
+<style lang="scss">
+.template-page {
+	width: 100%;
+	min-height: 100vh;
 }
 
-p {
-	padding: 0 10px;
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 20px 40px;
+	background-color: #fff;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+	.logo {
+		font-size: 30px;
+		font-weight: bold;
+	}
+
+	nav {
+		ul {
+			display: flex;
+
+			li {
+				margin-left: 20px;
+				cursor: pointer;
+
+				&:hover {
+					color: #1890ff;
+				}
+			}
+		}
+	}
 }
 
-.logo {
-	width: 10em;
-	height: 10em;
-	padding: 1.5rem;
-	will-change: filter;
-	transition: filter 300ms;
+.content {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 20px 40px;
+	position: relative;
+	overflow: hidden;
+	min-height: 800px;
+
+	.left {
+		position: absolute;
+		top: 20%;
+
+		h2 {
+			font-size: 30px;
+			font-weight: bold;
+			margin-bottom: 20px;
+		}
+
+		h3 {
+			font-size: 25px;
+		}
+	}
+
+	.right {
+		overflow: hidden;
+		position: absolute;
+		right: 40px;
+		border-radius: 20px;
+		width: 1000px;
+		height: 800px;
+		transform: translate(800px, 400px) scale(2, 2);
+
+		video {
+			width: 100%;
+			height: 100%;
+		}
+	}
 }
-.logo:hover {
-	filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-	filter: drop-shadow(0 0 2em #42b883aa);
+
+.loading {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 30px;
+	font-weight: bold;
+	z-index: 999;
+	background: #f1d6f1;
 }
 </style>
